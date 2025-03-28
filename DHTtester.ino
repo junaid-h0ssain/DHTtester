@@ -1,5 +1,6 @@
-// Example testing sketch for various DHT humidity/temperature sensors
-// Written by ladyada, public domain
+
+// SET THE STANDARD LIBRARY FIRST
+// USE ARDUINO IDE TO RUN THIS CODE 
 
 #include <Wire.h>
 #include <WiFiClient.h>
@@ -66,25 +67,25 @@ void rainSensor() {
 void loop() {
   delay(1000);
 
-  // Reading temperature or humidity takes about 250 milliseconds!
+  
   float h = dht.readHumidity();
-  // Read temperature as Celsius (the default)
+  
   float t = dht.readTemperature();
-  // Read temperature as Fahrenheit (isFahrenheit = true)
+  
   float f = dht.readTemperature(true);
 
-  // Check if any reads failed and exit early (to try again).
+  
   if (isnan(h) || isnan(t) || isnan(f)) {
     Serial.println(F("Failed to read from DHT sensor!"));
     return;
   }
-//
+
   Blynk.virtualWrite(V1, f);
 
   // Compute heat index in Fahrenheit (the default)
   float hif = dht.computeHeatIndex(f, h);
   Blynk.virtualWrite(V4, hif);
-  // Compute heat index in Celsius (isFahreheit = false)
+  
   float hic = dht.computeHeatIndex(t, h, false);
   Blynk.virtualWrite(V3, hic);
 
